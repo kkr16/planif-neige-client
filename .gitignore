@@ -1,1 +1,4 @@
 *.pyc
+build/
+dist/
+planif_neige_client.egg-info/
