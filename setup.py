@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="planif-neige-client",
-    version="0.0.2",
+    version="0.0.4",
     author="Karim Roukoz",
     author_email="roukoz@gmail.com",
     description="A python client for Montreal's Planif-Neige snow removal API",
