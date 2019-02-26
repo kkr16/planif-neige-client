@@ -5,14 +5,16 @@ import sqlite3
 
 import zeep
 
-URL = ('https://servicesenligne2.ville.montreal.qc.ca/'
+DEFAULT_URL = ('https://servicesenligne2.ville.montreal.qc.ca/'
        'api/infoneige/InfoneigeWebService?WSDL')
 
 
 class PlanifNeigeClient():
     """Client class for the PlanifNeige API."""
-    def __init__(self, token, database_path):
-        self.wsdl = URL
+    def __init__(self, token, database_path, url=None):
+        if url is None:
+            url = DEFAULT_URL
+        self.wsdl = url
         self.client = zeep.Client(wsdl=self.wsdl)
         self.token = token
         self.database_path = database_path
@@ -42,7 +44,7 @@ class PlanifNeigeClient():
         except TypeError:
             date_last_updated = (
                 datetime.datetime.now() - datetime.timedelta(
-                    days=60)).replace(microsecond=0).isoformat()
+                    days=365)).replace(microsecond=0).isoformat()
         return date_last_updated
 
     def get_planification_for_street(self, street_side_id):
@@ -62,7 +64,6 @@ class PlanifNeigeClient():
                 < datetime.datetime.now() - datetime.timedelta(minutes=5)):
             request = {'fromDate': date, 'tokenString': self.token}
             response = self.client.service.GetPlanificationsForDate(request)
-            logging.error(response)
             status = zeep.helpers.serialize_object(response)['responseStatus']
             if status == 0:
                 data = zeep.helpers.serialize_object(
