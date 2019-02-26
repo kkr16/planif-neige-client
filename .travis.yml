@@ -1,25 +1,38 @@
 language: python
 python:
-    - 3.6
+- 3.6
 notifications:
-    email: false
-
+  email: false
 before_install:
-    - sudo apt-get update
-    - sudo apt-get -y install python-pip
-    - sudo pip install --upgrade pip
-    - pip install --upgrade pip
-    - pip install pycodestyle pylint
-    - pip install -r requirements.txt
-
-jobs: 
+- sudo apt-get update
+- sudo apt-get -y install python-pip
+- sudo pip install --upgrade pip
+- pip install --upgrade pip
+- pip install pycodestyle pylint
+- pip install -r requirements.txt
+jobs:
   include:
   - stage: linters
-    name: "pylint"
+    name: pylint
     python: 3.6
     script: find . -name \*.py -exec pylint  {} +
   - script: find . -name \*.py -exec pycodestyle --ignore=W503 {} +
-    name: "pycodestyle"
+    name: pycodestyle
+  - stage: tests
+    python: 3.6
+    script: python test.py $PLANIFNEIGE_SIM_API_KEY
+deploy:
+  provider: pypi
+  user: kkr16
+  password:
+    secure: 0E2RZdgyHdXC+4npIQtfg6ILZX1SLjuQ7T+H/noWVE8CMXAMzdQYk1r1s2XD8oopM6ll3DnDwD7IXpOdgTZK7FvonncXWPsuR+ATf0j9fvqUKFosKJ49Ky5l1b67GJd9gVbwh3GFS+7XXdsXF2poq109BXk/khVWnQpbPcrgK+amQACVrv2UALgV+w9tDP0llryvJjwHVSD3VuuQvXKn5dATWeOL8m8gvBfMr38LHFXoLRRn+VVESInIzZy2QG689B9e0a2MfhmwRf1aCGxA8u1IE5QDzMv9So4hgsn/oPll/QPa6Y+gxKBh6S73rxdpxBG+cn9lwWGfNTwHQu5ssviU5yPkhp5iNTKv2J8IdHjinx4QMBrHb2wDUlcKfPYPwn5vyg8kth3ZA0Bq8aLn85x+E3lI3hLiDg8ZU47nsjctr0nryVuu1SYarsosYG2NDlAl9wEwNVLwCsCk8SB+OK20ZvBgV1fvR0+mg228+vNdB2hvADy7NUDiDMcvXZlifm0vLGNUeC1Qa6t2Kx9Xl56Lgu4+1P+U1mriRupCIdGYvR7aKQ1iwWjqzXJ7pgRzwLIxyYf7EW5Rk9Ss6Y0BJ7RwvbRqznhPncM2Xd9/1yGewH7C+Waeycdr2Naaazf+tTMH33XFXVQP25qgY3urGX9B252tvCgDuYkxWuiCMNA=
+  skip_existing: true
+  on:
+    tags: true
 
 stages:
-  - linters
+- linters
+- tests
+env:
+  global:
+    secure: TPvHfG0cQQPB2YSItBg+fABHhT1y60Fc2fXADMcs2ZWpCF79kznDkeZlSObcR5FfCnSLA98kjW7Ula6iP14AVPUtuCfZvSS6vo6+kgwx73AU6tuQQ3GShITxClaNZ7vDcwtuGqf7NQAxqKmCEdHSXKvwStvj860gqVA1Fi0EJY7XHOs6awBHxMxCFNz4+MWhF3nzS3WgapyYlKiis3zBU91XYtAyY4cHMUCLrCtM86yiLs54MNfBq7RoG0m6sfFlpMuYSbPUq1lDIIUtczQRf5LWn89GNgTrl1vVPgPdH7l2RUWhbmZ7eIPaPr9/0XNF4qNclYdsGAeGj6PLO9RysCFQrqOX4/VDACc4fcLHMXvctndldueEpT7fMwnkb6ie+ee+0bvtLqa03PYfCg7Aslyk8LFwHNc5JRqmL1gZYO5iQOdGRvsBqZjSOK5h8X9BtU7JuCLKADivRLiDbCELeRjVvOt5D4BXeOvAuFbteEZ+CzKT+ePNvkpUZSqBmr8bz7yIPY8FZNef63fj3wz7Zqto1KU/qkYXdaezGgZp+O86HBbNqX5ILwo0kGZn2r+KwSIvazsRCRGUvOIpEaKxDZVXRWdesQbawtCTAxcFYca7tEaQUsu1aZVb4qaGGi01o289yoGozPnYlHdwWmIGbwxPDN23jtifdQxmc5oe8FA=
