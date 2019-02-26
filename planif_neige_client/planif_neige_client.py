@@ -85,3 +85,4 @@ class PlanifNeigeClient():
                     (datetime.datetime.now() - datetime.timedelta(
                         minutes=1)).replace(microsecond=0).isoformat()))
                 self.conn.commit()
+            return status
