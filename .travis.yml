@@ -11,7 +11,6 @@ before_install:
 - pip install pycodestyle pylint
 - pip install twine setuptools wheel
 - pip install -r requirements.txt
-
 jobs:
   include:
   - stage: linters
@@ -24,9 +23,6 @@ jobs:
     python: 3.6
     script: python test.py $PLANIFNEIGE_SIM_API_KEY
   - stage: deploy
-      on: 
-        tags: true
-        branch: master
     python: 3.6
     script:
       - python3 setup.py sdist bdist_wheel
@@ -36,7 +32,6 @@ stages:
 - linters
 - tests
 - deploy
-
 
 
 env:
