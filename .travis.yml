@@ -31,7 +31,9 @@ jobs:
 stages:
 - linters
 - tests
-- deploy
+- name: deploy
+  on:
+    tags: true
 
 
 env:
