@@ -22,8 +22,8 @@ jobs:
   - stage: tests
     python: 3.6
     script: python test.py $PLANIFNEIGE_SIM_API_KEY
-  - stage: deploy
-    name: deploy
+  - stage: upload
+    name: upload
     python: 3.6
     script:
       - python3 setup.py sdist bdist_wheel
@@ -32,7 +32,7 @@ jobs:
 stages:
 - linters
 - tests
-- name: deploy
+- name: upload
   on:
     tag: true
 
