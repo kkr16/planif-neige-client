@@ -11,9 +11,8 @@ setuptools.setup(
     description="A python client for Montreal's Planif-Neige snow removal API",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    keywords = ['montreal','snow removal','neige','deneigement','quebec'],
-    install_requires = ['zeep'],
+    keywords=['montreal', 'snow removal', 'neige', 'deneigement', 'quebec'],
+    install_requires=['zeep'],
     url="https://github.com/kkr16/planif-neige-client",
     packages=setuptools.find_packages(),
 )
-
