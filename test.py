@@ -13,10 +13,14 @@ DATE = (datetime.now() - timedelta(days=90)).replace(microsecond=0).isoformat()
 
 API_KEY = sys.argv[1]
 
+
 def test():
     """Test function"""
     rcode = 0
-    pn_client = planif_neige_client.PlanifNeigeClient(API_KEY, DB_PATH, URL_SIM)
+    pn_client = planif_neige_client.PlanifNeigeClient(
+        API_KEY,
+        DB_PATH,
+        URL_SIM)
     api_time_start = datetime.now()
     api_rc = pn_client.get_planification_for_date(DATE)
     api_time_end = datetime.now()
@@ -42,7 +46,7 @@ def test():
         rcode = 1
 
     remove(DB_PATH)
-
     quit(rcode)
+
 
 test()
