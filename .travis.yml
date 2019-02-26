@@ -26,7 +26,7 @@ jobs:
     python: 3.6
     script:
       - python3 setup.py sdist bdist_wheel
-      - python3 -m -u $PYPI_USER -p $PYPI_PASSWORD twine upload dist/*
+      - python3 -m twine upload dist/* -u $PYPI_USER -p $PYPI_PASSWORD
 
 stages:
 - linters
