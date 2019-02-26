@@ -27,6 +27,7 @@ jobs:
     name: upload
     python: 3.6
     script:
+      - if [ -z "$TRAVIS_TAG" ]; then exit 0; fi
       - python3 setup.py sdist bdist_wheel
       - python3 -m twine upload dist/* -u $PYPI_USER -p $PYPI_PASSWORD
 
@@ -34,10 +35,8 @@ stages:
 - linters
 - tests
 - name: upload
-  branches:
-    only:
-    - /^v.*$/
-
+  on:
+    tags: true
 
 env:
   global:
