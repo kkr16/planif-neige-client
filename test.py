@@ -22,13 +22,12 @@ def test():
         DB_PATH,
         URL_SIM)
     api_time_start = datetime.now()
-    api_rc = pn_client.get_planification_for_date(DATE)
+    pn_client.get_planification_for_date(DATE)
     api_time_end = datetime.now()
 
-    print('API request ended with rc=' + str(api_rc)
-          + ', and took '
+    print('API request took'
           + str((api_time_end - api_time_start).total_seconds())
-          + ' seconds to complete.')
+          + ' seconds to compplete.')
 
     conn = sqlite3.connect(DB_PATH, check_same_thread=False)
     cursor = conn.cursor()

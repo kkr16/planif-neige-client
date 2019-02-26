@@ -1,12 +1,11 @@
 """Python library for Montreal's snow planning APIs"""
 import datetime
-import logging
 import sqlite3
 
 import zeep
 
 DEFAULT_URL = ('https://servicesenligne2.ville.montreal.qc.ca/'
-       'api/infoneige/InfoneigeWebService?WSDL')
+               'api/infoneige/InfoneigeWebService?WSDL')
 
 
 class PlanifNeigeClient():
@@ -85,4 +84,3 @@ class PlanifNeigeClient():
                     (datetime.datetime.now() - datetime.timedelta(
                         minutes=1)).replace(microsecond=0).isoformat()))
                 self.conn.commit()
-            return status
