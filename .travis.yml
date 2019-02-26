@@ -20,6 +20,7 @@ jobs:
   - script: find . -name \*.py -exec pycodestyle --ignore=W503 {} +
     name: pycodestyle
   - stage: tests
+    name: tests
     python: 3.6
     script: python test.py $PLANIFNEIGE_SIM_API_KEY
   - stage: upload
@@ -33,8 +34,7 @@ stages:
 - linters
 - tests
 - name: upload
-  on:
-    tag: true
+  on.tags: true
 
 
 env:
