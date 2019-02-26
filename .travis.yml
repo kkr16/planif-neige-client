@@ -17,7 +17,7 @@ jobs:
     name: "pylint"
     python: 3.6
     script: find . -name \*.py -exec pylint  {} +
-  - script: find . -name \*.py -exec pycodestyle --ignore=E402 {} +
+  - script: find . -name \*.py -exec pycodestyle --ignore=W503 {} +
     name: "pycodestyle"
 
 stages:
