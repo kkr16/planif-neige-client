@@ -33,9 +33,9 @@ stages:
 - linters
 - tests
 - name: deploy
-  on: 
-    condition: $TRAVIS_TAG =~ ^v[0-9]+\.[0-9]+\.[0-9]+
-    branch: master
+    on: 
+      condition: $TRAVIS_TAG =~ ^v[0-9]+\.[0-9]+\.[0-9]+
+      branch: master
 
 
 env:
