@@ -34,7 +34,7 @@ stages:
 - tests
 - name: deploy
   on: 
-    tags: true
+    tag: true
     branch: master
 
 
