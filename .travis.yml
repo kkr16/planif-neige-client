@@ -13,13 +13,12 @@ before_install:
 
 jobs: 
   include:
-  - stage: pycodestyle
-    python: 3.6
-    script: find . -name \*.py -exec pycodestyle --ignore=E402 {} +
-  - stage: pylint
+  - stage: linters
+    name: "pylint"
     python: 3.6
     script: find . -name \*.py -exec pylint  {} +
+  - script: find . -name \*.py -exec pycodestyle --ignore=E402 {} +
+    name: "pycodestyle"
 
 stages:
-  - pycodestyle
-  - pylint
+  - linters
