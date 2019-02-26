@@ -23,16 +23,19 @@ jobs:
     python: 3.6
     script: python test.py $PLANIFNEIGE_SIM_API_KEY
   - stage: deploy
+    python: 3.6
     script:
       - python3 setup.py sdist bdist_wheel
       - python3 -m -u $PYPI_USER -p $PYPI_PASSWORD twine upload dist/*
-    if: 
-      - branch = master
-      - tags = true
+
 stages:
 - linters
 - tests
-- deploy
+- name: deploy
+  if: 
+  - branch = master
+  - tags = true
+
 env:
   global:
   - secure: TPvHfG0cQQPB2YSItBg+fABHhT1y60Fc2fXADMcs2ZWpCF79kznDkeZlSObcR5FfCnSLA98kjW7Ula6iP14AVPUtuCfZvSS6vo6+kgwx73AU6tuQQ3GShITxClaNZ7vDcwtuGqf7NQAxqKmCEdHSXKvwStvj860gqVA1Fi0EJY7XHOs6awBHxMxCFNz4+MWhF3nzS3WgapyYlKiis3zBU91XYtAyY4cHMUCLrCtM86yiLs54MNfBq7RoG0m6sfFlpMuYSbPUq1lDIIUtczQRf5LWn89GNgTrl1vVPgPdH7l2RUWhbmZ7eIPaPr9/0XNF4qNclYdsGAeGj6PLO9RysCFQrqOX4/VDACc4fcLHMXvctndldueEpT7fMwnkb6ie+ee+0bvtLqa03PYfCg7Aslyk8LFwHNc5JRqmL1gZYO5iQOdGRvsBqZjSOK5h8X9BtU7JuCLKADivRLiDbCELeRjVvOt5D4BXeOvAuFbteEZ+CzKT+ePNvkpUZSqBmr8bz7yIPY8FZNef63fj3wz7Zqto1KU/qkYXdaezGgZp+O86HBbNqX5ILwo0kGZn2r+KwSIvazsRCRGUvOIpEaKxDZVXRWdesQbawtCTAxcFYca7tEaQUsu1aZVb4qaGGi01o289yoGozPnYlHdwWmIGbwxPDN23jtifdQxmc5oe8FA=
