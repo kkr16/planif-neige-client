@@ -34,7 +34,9 @@ stages:
 - linters
 - tests
 - name: upload
-  on.tags: true
+  branches:
+    only:
+    - /^v.*$/
 
 
 env:
