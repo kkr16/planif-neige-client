@@ -9,7 +9,7 @@ URL = ('https://servicesenligne2.ville.montreal.qc.ca/'
        'api/infoneige/InfoneigeWebService?WSDL')
 
 
-class PlanifNeigeClient(object):
+class PlanifNeigeClient():
     """Client class for the PlanifNeige API."""
     def __init__(self, token, database_path):
         self.wsdl = URL
@@ -27,8 +27,8 @@ class PlanifNeigeClient(object):
         dateFinPlanif datetime, dateDebutReplanif datetime,
         dateFinReplanif datetime, dateMaj datetime)''')
 
-        cursor.execute('''CREATE TABLE IF NOT EXISTS meta (key text PRIMARY KEY,
-        value text)''')
+        cursor.execute('''CREATE TABLE IF NOT EXISTS meta (key text
+        PRIMARY KEY, value text)''')
 
         self.conn.commit()
 
