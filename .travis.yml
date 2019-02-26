@@ -32,7 +32,9 @@ stages:
 - linters
 - tests
 - name: deploy
-  if: tag = true
+  on: 
+    tags = true
+    branch = master
 
 
 env:
