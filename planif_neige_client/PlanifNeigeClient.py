@@ -38,8 +38,8 @@ class PlanifNeigeClient:
             date_last_updated = c.fetchone()[0]
         except TypeError:
             date_last_updated = (
-                datetime.datetime.now() -
-                datetime.timedelta(days=60)).replace(microsecond=0).isoformat()
+                datetime.datetime.now()
+                - datetime.timedelta(days=60)).replace(microsecond=0).isoformat()
         return date_last_updated
 
     def get_planification_for_street(self, street_side_id):
@@ -76,10 +76,10 @@ class PlanifNeigeClient:
                         item['dateDebutReplanif'],
                         item['dateFinReplanif'],
                         item['dateMaj']
-                        ))
+                    ))
                 c.execute('INSERT OR REPLACE INTO meta VALUES (?,?)', (
                     "dateUpdated",
-                    (datetime.datetime.now() -
-                        datetime.timedelta(
+                    (datetime.datetime.now()
+                        - datetime.timedelta(
                             minutes=1)).replace(microsecond=0).isoformat()))
                 self.conn.commit()
