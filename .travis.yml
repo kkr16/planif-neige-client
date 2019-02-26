@@ -32,6 +32,8 @@ stages:
 - linters
 - tests
 - name: deploy
+  if: (branch = master) AND (tag = true)
+
 
 env:
   global:
