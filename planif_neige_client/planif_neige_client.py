@@ -4,12 +4,9 @@ import sqlite3
 
 import zeep
 
-from planif_neige_client.const import (SQL_CREATE_META,
-                                       SQL_CREATE_PLANIFICATIONS,
-                                       SQL_INSERT_META,
-                                       SQL_INSERT_PLANIFICATIONS,
-                                       SQL_SELECT_DATEUPDATED,
-                                       SQL_SELECT_PLANIFICATION)
+from .const import (SQL_CREATE_META, SQL_CREATE_PLANIFICATIONS,
+                    SQL_INSERT_META, SQL_INSERT_PLANIFICATIONS,
+                    SQL_SELECT_DATEUPDATED, SQL_SELECT_PLANIFICATION)
 
 DEFAULT_URL = ('https://servicesenligne2.ville.montreal.qc.ca/'
                'api/infoneige/InfoneigeWebService?WSDL')
