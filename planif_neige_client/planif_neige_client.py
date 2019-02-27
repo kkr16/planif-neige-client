@@ -4,6 +4,13 @@ import sqlite3
 
 import zeep
 
+from planif_neige_client.const import (SQL_CREATE_META,
+                                       SQL_CREATE_PLANIFICATIONS,
+                                       SQL_INSERT_META,
+                                       SQL_INSERT_PLANIFICATIONS,
+                                       SQL_SELECT_DATEUPDATED,
+                                       SQL_SELECT_PLANIFICATION)
+
 DEFAULT_URL = ('https://servicesenligne2.ville.montreal.qc.ca/'
                'api/infoneige/InfoneigeWebService?WSDL')
 
@@ -23,13 +30,9 @@ class PlanifNeigeClient():
             check_same_thread=False)
         cursor = self.conn.cursor()
 
-        cursor.execute('''CREATE TABLE IF NOT EXISTS planifications (munid int,
-        coteRueId int PRIMARY KEY, etatDeneig int, dateDebutPlanif datetime,
-        dateFinPlanif datetime, dateDebutReplanif datetime,
-        dateFinReplanif datetime, dateMaj datetime)''')
+        cursor.execute(SQL_CREATE_PLANIFICATIONS)
 
-        cursor.execute('''CREATE TABLE IF NOT EXISTS meta (key text
-        PRIMARY KEY, value text)''')
+        cursor.execute(SQL_CREATE_META)
 
         self.conn.commit()
 
@@ -37,7 +40,7 @@ class PlanifNeigeClient():
         """Read from DB the date the API was last called. If date does not
         exist, assume API was never called return date 60 days ago"""
         cursor = self.conn.cursor()
-        cursor.execute('''SELECT value from meta WHERE key="dateUpdated"''')
+        cursor.execute(SQL_SELECT_DATEUPDATED)
         try:
             date_last_updated = cursor.fetchone()[0]
         except TypeError:
@@ -49,8 +52,7 @@ class PlanifNeigeClient():
     def get_planification_for_street(self, street_side_id):
         """Return from DB the snow removal operations for the street"""
         cursor = self.conn.cursor()
-        cursor.execute(
-            'SELECT * FROM planifications WHERE coteRueId=?', [street_side_id])
+        cursor.execute(SQL_SELECT_PLANIFICATION, [street_side_id])
         return cursor.fetchone()
 
     def get_planification_for_date(self, date=False):
@@ -68,8 +70,7 @@ class PlanifNeigeClient():
                 data = zeep.helpers.serialize_object(
                     response)['planifications']['planification']
                 for item in data:
-                    cursor.execute('''INSERT OR REPLACE INTO planifications
-                    VALUES (?,?,?,?,?,?,?,?)''', (
+                    cursor.execute(SQL_INSERT_PLANIFICATIONS, (
                         item['munid'],
                         item['coteRueId'],
                         item['etatDeneig'],
@@ -79,8 +80,10 @@ class PlanifNeigeClient():
                         item['dateFinReplanif'],
                         item['dateMaj']
                     ))
-                cursor.execute('INSERT OR REPLACE INTO meta VALUES (?,?)', (
-                    "dateUpdated",
-                    (datetime.datetime.now() - datetime.timedelta(
-                        minutes=1)).replace(microsecond=0).isoformat()))
+                cursor.execute(
+                    SQL_INSERT_META, (
+                        "dateUpdated", (
+                            datetime.datetime.now()
+                            - datetime.timedelta(minutes=1))
+                        .replace(microsecond=0).isoformat()))
                 self.conn.commit()
