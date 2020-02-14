@@ -9,3 +9,5 @@ Data is provided under the city's Open Data initiaitve and requires an API key p
 Install using pip:
 
 ``pip3 install planif-neige-client``
+
+# Contributions welcome via PR.
