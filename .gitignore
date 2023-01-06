@@ -4,3 +4,8 @@ dist/
 planif_neige_client.egg-info/
 *.db
 .vscode
+bin/
+lib/
+lib64/
+pyvenv.cfg
+lib64
