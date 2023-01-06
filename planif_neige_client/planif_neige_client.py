@@ -11,10 +11,13 @@ DEFAULT_URL = ('https://servicesenligne2.ville.montreal.qc.ca/'
 class PlanifNeigeClient():
     """Client class for the PlanifNeige API."""
     def __init__(self, token, database_path, url=None):
+        self.transport = zeep.Transport()
+        self.transport.session.headers['User-Agent'] = "planif-neige-client https://github.com/kkr16/planif-neige-client"
+
         if url is None:
             url = DEFAULT_URL
         self.wsdl = url
-        self.client = zeep.Client(wsdl=self.wsdl)
+        self.client = zeep.Client(wsdl=self.wsdl, transport=self.transport)
         self.token = token
         self.database_path = database_path
 
